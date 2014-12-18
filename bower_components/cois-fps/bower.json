@@ -1,0 +1,26 @@
+{
+  "name": "cois-fps",
+  "version": "1.0.0",
+  "homepage": "https://github.com/Chair-of-Indefinite-Studies/fps",
+  "authors": [
+    "dvberkel <daan.v.berkel.1980@gmail.com>"
+  ],
+  "description": "Measures frames per second",
+  "main": "fps.js",
+  "keywords": [
+    "fps"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "spec",
+    "SpecRunner.html",
+    "package.json",
+    "gulpFile.js"
+  ],
+  "devDependencies": {
+    "jasmine": "~2.1.3"
+  }
+}
