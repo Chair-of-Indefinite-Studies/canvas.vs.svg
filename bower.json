@@ -1,0 +1,25 @@
+{
+  "name": "canvas.vs.svg",
+  "version": "1.0.0",
+  "homepage": "https://github.com/Chair-of-Indefinite-Studies/canvas.vs.svg",
+  "authors": [
+    "dvberkel <daan.v.berkel.1980@gmail.com>"
+  ],
+  "description": "Study which of two targets is best",
+  "main": "index.html",
+  "keywords": [
+    "study",
+    "performance",
+    "svg",
+    "canvas"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
