@@ -37,7 +37,7 @@
 
 	var billiard = ns.billiard = {};
 
-	var defaultState = {
+	var defaultBallState = {
 		'x': 0,
 		'y': 0,
 		'vx': 1,
@@ -48,15 +48,15 @@
 	var Ball = billiard.Ball = function(state){
 		Observable.call(this);
 		state = state || {};
-		for (var key in defaultState) {
-			this[key] = state[key] || defaultState[key];
+		for (var key in defaultBallState) {
+			this[key] = state[key] !== undefined ? state[key] : defaultBallState[key];
 		}
 	};
 	Ball.prototype = Object.create(Observable.prototype);
 	Ball.prototype.constructor = Ball;
 	Ball.prototype.state = function(){
 		var result = {};
-		for (var key in defaultState) {
+		for (var key in defaultBallState) {
 			result[key] = this[key];
 		}
 		return result;
@@ -66,13 +66,14 @@
 		this.y += this.vy;
 		this.signal('tick', this.state());
 	};
-	Ball.prototype.reflextX = function(){
+	Ball.prototype.reflectX = function(){
 		this.vx *= -1;
 	}
-	Ball.prototype.reflextY = function(){
+	Ball.prototype.reflectY = function(){
 		this.vy *= -1;
 	}
 	Ball.prototype.collideWith = function(other){
+		/* factor in momentum */
 		var v = reflect(
 			{ x: this.vx, y: this.vy },
 			{ x: this.x - other.x, y: this.y - other.y }
@@ -81,4 +82,61 @@
 		this.vx = v.x;
 		this.vy = v.y;
 	}
+
+	function distance(p, q){
+		return Math.sqrt(dot(p, q));
+	};
+
+	function minimalSeperation(p, q){
+		return p.r + q.r;
+	};
+
+	var defaultTableState = {
+		width: function(){ return 10; },
+		height: function(){ return 5; },
+		balls: function(){ return []; }
+	}
+
+	var Table = billiard.Table = function(state){
+		state = state || {};
+		for (var key in defaultTableState) {
+			this[key] = state[key] || defaultTableState[key]();
+		}
+		this.balls = this.balls.map(function(ballState){ return new Ball(state); });
+	};
+	Table.prototype.state = function(){
+		var result = {};
+		for (var key in defaultTableState){
+			result[key] = this[key];
+		}
+		result.balls = result.balls.map(function(ball){ return ball.state(); });
+		return result;
+	};
+	Table.prototype.addBall = function(state){
+		this.balls.push(new Ball(state));
+	};
+	Table.prototype.tick = function(){
+		this.balls.forEach(function(ball){ ball.tick(); });
+		this.balls
+			.filter(function(ball){
+				return ball.x >= this.width && ball.vx > 0 ||
+					   ball.x <= -this.width && ball.vx < 0;
+			}.bind(this))
+			.forEach(function(ball){ ball.reflectX(); });
+		this.balls
+			.filter(function(ball){
+				return ball.y >= this.height && ball.vy > 0 ||
+					   ball.y <= -this.height && ball.vy < 0;
+			}.bind(this))
+			.forEach(function(ball){ ball.reflectY(); });
+		this.balls.forEach(function(ball){
+			this.balls
+				.filter(function(target){ return target !== ball; })
+				.filter(function(target){
+					return distance(ball, target) <= minimalSeperation(ball, target);
+				}).forEach(function(target){
+					ball.collideWith(target);
+				});
+		}.bind(this));
+	};
 })(window);

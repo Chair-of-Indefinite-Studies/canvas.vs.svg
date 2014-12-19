@@ -25,7 +25,7 @@ describe('billiard.Ball', function(){
 	it('should reflectX', function(){
 		var ball = new billiard.Ball({ x: 0, y: 0, vx: 1, vy: -1 });
 
-		ball.reflextX();
+		ball.reflectX();
 
 		expect(ball.state()).toEqual({ x: 0, y: 0, vx: -1, vy: -1, r: 1 });
 	});
@@ -33,7 +33,7 @@ describe('billiard.Ball', function(){
 	it('should reflectY', function(){
 		var ball = new billiard.Ball({ x: 0, y: 0, vx: 1, vy: -1 });
 
-		ball.reflextY();
+		ball.reflectY();
 
 		expect(ball.state()).toEqual({ x: 0, y: 0, vx: 1, vy: 1, r: 1 });
 	});
