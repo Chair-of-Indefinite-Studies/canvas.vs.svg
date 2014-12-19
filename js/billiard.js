@@ -42,6 +42,7 @@
 		'y': 0,
 		'vx': 1,
 		'vy': 0,
+		'r': 1
 	};
 
 	var Ball = billiard.Ball = function(state){

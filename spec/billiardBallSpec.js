@@ -4,7 +4,8 @@ describe('billiard.Ball', function(){
 			x: 0,
 			y: 0,
 			vx: 1,
-			vy: 0
+			vy: 0,
+			r: 2
 		}
 		var ball = new billiard.Ball(expectedState);
 
@@ -18,7 +19,7 @@ describe('billiard.Ball', function(){
 
 		ball.tick();
 
-		expect(ball.state()).toEqual({ x: 1, y: -1, vx: 1, vy: -1 });
+		expect(ball.state()).toEqual({ x: 1, y: -1, vx: 1, vy: -1, r: 1 });
 	});
 
 	it('should reflectX', function(){
@@ -26,7 +27,7 @@ describe('billiard.Ball', function(){
 
 		ball.reflextX();
 
-		expect(ball.state()).toEqual({ x: 0, y: 0, vx: -1, vy: -1 });
+		expect(ball.state()).toEqual({ x: 0, y: 0, vx: -1, vy: -1, r: 1 });
 	});
 
 	it('should reflectY', function(){
@@ -34,7 +35,7 @@ describe('billiard.Ball', function(){
 
 		ball.reflextY();
 
-		expect(ball.state()).toEqual({ x: 0, y: 0, vx: 1, vy: 1 });
+		expect(ball.state()).toEqual({ x: 0, y: 0, vx: 1, vy: 1, r: 1 });
 	});
 
 	it('should notify a tick', function(){
@@ -67,7 +68,7 @@ describe('billiard.Ball', function(){
 
 			ball.tick();
 
-			expect(actualState).toEqual({ x: 1, y: 0, vx: 1, vy: 0 });
+			expect(actualState).toEqual({ x: 1, y: 0, vx: 1, vy: 0, r: 1 });
 		});
 	});
 });
