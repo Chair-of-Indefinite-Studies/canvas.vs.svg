@@ -98,12 +98,15 @@
 	}
 
 	var Table = billiard.Table = function(state){
+		Observable.call(this);
 		state = state || {};
 		for (var key in defaultTableState) {
 			this[key] = state[key] || defaultTableState[key]();
 		}
 		this.balls = this.balls.map(function(ballState){ return new Ball(state); });
 	};
+	Table.prototype = Object.create(Observable.prototype);
+	Table.prototype.constructor = Table;
 	Table.prototype.state = function(){
 		var result = {};
 		for (var key in defaultTableState){
@@ -113,7 +116,9 @@
 		return result;
 	};
 	Table.prototype.addBall = function(state){
-		this.balls.push(new Ball(state));
+		var ball = new Ball(state);
+		this.balls.push(ball);
+		this.signal('ball', ball);
 	};
 	Table.prototype.tick = function(){
 		this.balls.forEach(function(ball){ ball.tick(); });

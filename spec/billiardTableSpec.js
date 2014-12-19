@@ -23,6 +23,27 @@ describe('billiard.Table', function(){
 		});
 	});
 
+	describe('addBall', function(){
+		it('should notify', function(){
+			var notified = false;
+			table.on('ball', function(){ notified = true; });
+
+			table.addBall();
+
+			expect(notified).toBeTruthy();
+		});
+
+		it('notify should pass new ball', function(){
+			var actualBall;
+			table.on('ball', function(ball){ actualBall = ball; });
+
+			table.addBall();
+
+			expect(actualBall).toBeDefined();
+			expect(actualBall.state()).toEqual({ x: 0, y: 0, vx: 1, vy: 0, r: 1 });
+		})
+	});
+
 	it('should tick', function(){
 		table.addBall({ vx: 1 });
 
