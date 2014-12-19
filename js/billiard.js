@@ -1,0 +1,51 @@
+;(function(ns, undefined){
+	var Observable = function(){
+		this.observers = {};
+	};
+	Observable.prototype.on = function(event, callback) {
+		(this.observers[event] = this.observers[event] || []).push(callback);
+	};
+	Observable.prototype.signal = function(event){
+		var args = Array.prototype.slice.call(arguments, 1);
+		(this.observers[event] = this.observers[event] || []).forEach(function(callback){
+			callback.apply(undefined, args);
+		});
+	};
+
+	var billiard = ns.billiard = {};
+
+	var defaultState = {
+		'x': 0,
+		'y': 0,
+		'vx': 1,
+		'vy': 0,
+	};
+
+	var Ball = billiard.Ball = function(state){
+		Observable.call(this);
+		state = state || {};
+		for (var key in defaultState) {
+			this[key] = state[key] || defaultState[key];
+		}
+	};
+	Ball.prototype = Object.create(Observable.prototype);
+	Ball.prototype.constructor = Ball;
+	Ball.prototype.state = function(){
+		var result = {};
+		for (var key in defaultState) {
+			result[key] = this[key];
+		}
+		return result;
+	};
+	Ball.prototype.tick = function(){
+		this.x += this.vx;
+		this.y += this.vy;
+		this.signal('tick', this.state());
+	};
+	Ball.prototype.reflextX = function(){
+		this.vx *= -1;
+	}
+	Ball.prototype.reflextY = function(){
+		this.vy *= -1;
+	}
+})(window);
