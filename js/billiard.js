@@ -1,4 +1,27 @@
 ;(function(ns, undefined){
+	function dot(a, b){
+		return a.x * b.x + a.y * b.y;
+	};
+
+	function scale(a, k){
+		return { x: a.x * k, y: a.y * k };
+	};
+
+	function difference(a, b){
+		return { x: a.x - b.x, y: a.y - b.y };
+	}
+
+	function sum(a, b){
+		return { x: a.x + b.x, y: a.y + b.y };
+	}
+
+	function reflect(v, n){
+		var norm = Math.sqrt(dot(n, n));
+		var normal = scale(n, 1/norm);
+		var pn = scale(normal, dot(normal, v));
+		return sum(scale(pn, -2), v);
+	};
+
 	var Observable = function(){
 		this.observers = {};
 	};
@@ -47,5 +70,14 @@
 	}
 	Ball.prototype.reflextY = function(){
 		this.vy *= -1;
+	}
+	Ball.prototype.collideWith = function(other){
+		var v = reflect(
+			{ x: this.vx, y: this.vy },
+			{ x: this.x - other.x, y: this.y - other.y }
+		);
+
+		this.vx = v.x;
+		this.vy = v.y;
 	}
 })(window);
