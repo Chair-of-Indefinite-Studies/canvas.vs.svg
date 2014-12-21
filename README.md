@@ -56,6 +56,11 @@ We enabled collisions in this run.
 | 00500 | 60 | 21 | 11 |
 | 01000 | 07 | 06 | 04 |
 
+Conclusion
+----------
+
+When we only take frames per seconds into account a canvas based view
+out performs a SVG based view.
 
 [svg]: https://developer.mozilla.org/en-US/docs/Web/SVG
 [canvas]: https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API
