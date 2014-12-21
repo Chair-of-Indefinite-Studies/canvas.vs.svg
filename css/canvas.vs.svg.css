@@ -4,3 +4,7 @@
 	left: 0;
 	font-family: monospace;
 }
+
+canvas {
+	margin: 20px;
+}
