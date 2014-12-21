@@ -11,14 +11,14 @@ describe('billiard.Table', function(){
 	it('should have state', function(){
 		var state = table.state();
 
-		expect(state).toEqual({ width: 10, height: 5, balls: [] });
+		expect(state).toEqual({ width: 10, height: 5, collisions: true, balls: [] });
 	});
 
 	it('should add balls', function(){
 		table.addBall({ vx: 1 });
 
 		expect(table.state()).toEqual({
-			width: 10, height: 5,
+			width: 10, height: 5, collisions: true,
 			balls: [{ x: 0, y: 0, vx: 1, vy: 0, r: 1 }]
 		});
 	});
@@ -50,7 +50,7 @@ describe('billiard.Table', function(){
 		table.tick();
 
 		expect(table.state()).toEqual({
-			width: 10, height: 5,
+			width: 10, height: 5, collisions: true,
 			balls: [{ x: 1, y: 0, vx: 1, vy: 0, r: 1 }]
 		});
 	});
@@ -63,7 +63,7 @@ describe('billiard.Table', function(){
 			table.tick();
 
 			expect(table.state()).toEqual({
-				width: 10, height: 5,
+				width: 10, height: 5, collisions: true,
 				balls: [
 					{ x: 1, y: 0, vx: 1, vy: 0, r: 1 },
 					{ x: -1, y: 1, vx: -1, vy: 0, r: 1 },
@@ -88,7 +88,7 @@ describe('billiard.Table', function(){
 			table.tick();
 
 			expect(table.state()).toEqual({
-				width: 10, height: 5,
+				width: 10, height: 5, collisions: true,
 				balls: [
 					{ x: 1, y: 1, vx: 1, vy: 1, r: 1 }
 				]
@@ -101,7 +101,7 @@ describe('billiard.Table', function(){
 			table.tick();
 
 			expect(table.state()).toEqual({
-				width: 10, height: 5,
+				width: 10, height: 5, collisions: true,
 				balls: [
 					{ x: 9, y: 0, vx: -1, vy: 0, r: 1 }
 				]
@@ -114,7 +114,7 @@ describe('billiard.Table', function(){
 			table.tick();
 
 			expect(table.state()).toEqual({
-				width: 10, height: 5,
+				width: 10, height: 5, collisions: true,
 				balls: [
 					{ x: -9, y: 0, vx: 1, vy: 0, r: 1 }
 				]
@@ -127,7 +127,7 @@ describe('billiard.Table', function(){
 			table.tick();
 
 			expect(table.state()).toEqual({
-				width: 10, height: 5,
+				width: 10, height: 5, collisions: true,
 				balls: [
 					{ x: 0, y: 4, vx: 0, vy: -1, r: 1 }
 				]
@@ -140,7 +140,7 @@ describe('billiard.Table', function(){
 			table.tick();
 
 			expect(table.state()).toEqual({
-				width: 10, height: 5,
+				width: 10, height: 5, collisions: true,
 				balls: [
 					{ x:0, y: -4, vx: 0, vy: 1, r: 1 }
 				]
@@ -154,13 +154,32 @@ describe('billiard.Table', function(){
 			table.tick();
 
 			expect(table.state()).toEqual({
-				width: 10, height: 5,
+				width: 10, height: 5, collisions: true,
 				balls: [
 					{ x:1, y: 0, vx: -1, vy: 0, r: 1 },
 					{ x:3, y: 0, vx: 1, vy: 0, r: 1 }
 				]
 			});
+		});
 
+		it('should resolve collisions among balls unless \'collisions\' is false', function(){
+			table = new billiard.Table({
+				width: 10,
+				height: 5,
+				collisions: false
+			});
+			table.addBall({ x: 0, y: 0, vx: 1, vy: 0 });
+			table.addBall({ x: 4, y: 0, vx: -1, vy: 0 });
+
+			table.tick();
+
+			expect(table.state()).toEqual({
+				width: 10, height: 5, collisions: false,
+				balls: [
+					{ x:1, y: 0, vx: 1, vy: 0, r: 1 },
+					{ x:3, y: 0, vx: -1, vy: 0, r: 1 }
+				]
+			});
 		});
 	});
 });

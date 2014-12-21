@@ -94,6 +94,7 @@
 	var defaultTableState = {
 		width: function(){ return 10; },
 		height: function(){ return 5; },
+		collisions: function(){ return true; },
 		balls: function(){ return []; }
 	}
 
@@ -101,7 +102,7 @@
 		Observable.call(this);
 		state = state || {};
 		for (var key in defaultTableState) {
-			this[key] = state[key] || defaultTableState[key]();
+			this[key] = state[key] !== undefined ? state[key] : defaultTableState[key]();
 		}
 		this.balls = this.balls.map(function(ballState){ return new Ball(state); });
 	};
@@ -135,14 +136,16 @@
 					ball.y <= -(this.height - ball.r) && ball.vy < 0;
 			}.bind(this))
 			.forEach(function(ball){ ball.reflectY(); });
-		this.balls.forEach(function(ball){
-			this.balls
-				.filter(function(target){ return target !== ball; })
-				.filter(function(target){
-					return distance(ball, target) <= minimalSeperation(ball, target);
-				}).forEach(function(target){
-					ball.collideWith(target);
-				});
-		}.bind(this));
+		if (this.collisions) {
+			this.balls.forEach(function(ball){
+				this.balls
+					.filter(function(target){ return target !== ball; })
+					.filter(function(target){
+						return distance(ball, target) <= minimalSeperation(ball, target);
+					}).forEach(function(target){
+						ball.collideWith(target);
+					});
+			}.bind(this));
+		}
 	};
 })(window);
