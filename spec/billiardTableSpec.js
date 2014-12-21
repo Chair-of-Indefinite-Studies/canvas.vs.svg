@@ -70,6 +70,15 @@ describe('billiard.Table', function(){
 				]
 			});
 		});
+
+		it('should notify of tick', function(){
+			var notified = false;
+			table.on('tick', function(){ notified = true; });
+
+			table.tick();
+
+			expect(notified).toBeTruthy();
+		});
 	});
 
 	describe('collision', function(){

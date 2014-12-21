@@ -121,6 +121,7 @@
 		this.signal('ball', ball);
 	};
 	Table.prototype.tick = function(){
+		this.signal('tick');
 		this.balls.forEach(function(ball){ ball.tick(); });
 		this.balls
 			.filter(function(ball){
