@@ -5,15 +5,11 @@ var table = (function(fps, billiard, undefined){
 		return result;
 	}
 
-	var options = { width: 320, height: 240, collisions: false };
+	var options = { width: 320, height: 240, collisions: true };
 	var table = new billiard.Table(options);
+	table.addBall({ x: -280, y: 0, vx: 2, vy: 0, r: 30 });
+	table.addBall({ x: 0, y: 0, vx: 0, vy: 0, r: 10 });
+	table.addBall({ x: 100, y: 0, vx: 0, vy: 0, r: 5 });
 
-	(range(0, 1)).forEach(function(_, index){
-		var x = Math.floor(2 * options.width * (Math.random() - 1/2));
-		var y = Math.floor(2 * options.height * (Math.random() - 1/2));
-		var vx = Math.floor(10 * (Math.random() - 1/2));
-		var vy = Math.floor(6 * (Math.random() - 1/2));
-		table.addBall({ x: x, y: y, vx: vx, vy: vy, r: 10 });
-	});
 	return table;
 })(fps, billiard);
