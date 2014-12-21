@@ -125,14 +125,14 @@
 		this.balls.forEach(function(ball){ ball.tick(); });
 		this.balls
 			.filter(function(ball){
-				return ball.x >= this.width && ball.vx > 0 ||
-					   ball.x <= -this.width && ball.vx < 0;
+				return ball.x >= (this.width - ball.r) && ball.vx > 0 ||
+					ball.x <= -(this.width - ball.r) && ball.vx < 0;
 			}.bind(this))
 			.forEach(function(ball){ ball.reflectX(); });
 		this.balls
 			.filter(function(ball){
-				return ball.y >= this.height && ball.vy > 0 ||
-					   ball.y <= -this.height && ball.vy < 0;
+				return ball.y >= (this.height - ball.r) && ball.vy > 0 ||
+					ball.y <= -(this.height - ball.r) && ball.vy < 0;
 			}.bind(this))
 			.forEach(function(ball){ ball.reflectY(); });
 		this.balls.forEach(function(ball){

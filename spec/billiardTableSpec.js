@@ -96,53 +96,53 @@ describe('billiard.Table', function(){
 		});
 
 		it('should resolve right wall collisions', function(){
-			table.addBall({ x: 9, vx: 1 });
+			table.addBall({ x: 8, vx: 1 });
 
 			table.tick();
 
 			expect(table.state()).toEqual({
 				width: 10, height: 5,
 				balls: [
-					{ x: 10, y: 0, vx: -1, vy: 0, r: 1 }
+					{ x: 9, y: 0, vx: -1, vy: 0, r: 1 }
 				]
 			});
 		});
 
 		it('should resolve left wall collisions', function(){
-			table.addBall({ x: -9, vx: -1 });
+			table.addBall({ x: -8, vx: -1 });
 
 			table.tick();
 
 			expect(table.state()).toEqual({
 				width: 10, height: 5,
 				balls: [
-					{ x: -10, y: 0, vx: 1, vy: 0, r: 1 }
+					{ x: -9, y: 0, vx: 1, vy: 0, r: 1 }
 				]
 			});
 		});
 
 		it('should resolve top wall collisions', function(){
-			table.addBall({ y: 4, vx: 0, vy: 1 });
+			table.addBall({ y: 3, vx: 0, vy: 1 });
 
 			table.tick();
 
 			expect(table.state()).toEqual({
 				width: 10, height: 5,
 				balls: [
-					{ x: 0, y: 5, vx: 0, vy: -1, r: 1 }
+					{ x: 0, y: 4, vx: 0, vy: -1, r: 1 }
 				]
 			});
 		});
 
 		it('should resolve bottom wall collisions', function(){
-			table.addBall({ y: -4, vx: 0, vy: -1 });
+			table.addBall({ y: -3, vx: 0, vy: -1 });
 
 			table.tick();
 
 			expect(table.state()).toEqual({
 				width: 10, height: 5,
 				balls: [
-					{ x:0, y: -5, vx: 0, vy: 1, r: 1 }
+					{ x:0, y: -4, vx: 0, vy: 1, r: 1 }
 				]
 			});
 		});
