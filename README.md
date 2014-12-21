@@ -21,10 +21,10 @@ observing the reported frames per second for each of the setups.
 
 ### Without Collisions
 
-We disallowed collisions in this run.
+We disabled collisions in this run.
 
 | Number of balls | No visualisation | Canvas | SVG |
-|-----|----|----|----|
+|-------|----|----|----|
 | 00001 | 60 | 60 | 60 |
 | 00002 | 60 | 60 | 60 |
 | 00005 | 60 | 60 | 60 |
@@ -38,6 +38,24 @@ We disallowed collisions in this run.
 | 02000 | 60 | 21 | 06 |
 | 05000 | 60 | 08 | 03 |
 | 10000 | 60 | 04 | 01 |
+
+### With Collisions
+
+We enabled collisions in this run.
+
+| Number of balls | No visualisation | Canvas | SVG |
+|-------|----|----|----|
+| 00001 | 60 | 60 | 60 |
+| 00002 | 60 | 60 | 60 |
+| 00005 | 60 | 60 | 60 |
+| 00010 | 60 | 60 | 60 |
+| 00020 | 60 | 60 | 60 |
+| 00050 | 60 | 60 | 60 |
+| 00100 | 60 | 60 | 49 |
+| 00200 | 60 | 60 | 30 |
+| 00500 | 60 | 21 | 11 |
+| 01000 | 07 | 06 | 04 |
+
 
 [svg]: https://developer.mozilla.org/en-US/docs/Web/SVG
 [canvas]: https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API
