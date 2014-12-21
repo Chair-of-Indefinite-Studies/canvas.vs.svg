@@ -73,14 +73,17 @@
 		this.vy *= -1;
 	}
 	Ball.prototype.collideWith = function(other){
-		/* factor in momentum */
-		var v = reflect(
-			{ x: this.vx, y: this.vy },
-			{ x: this.x - other.x, y: this.y - other.y }
-		);
+		var m = Math.pow(this.r, 2);
+		var M = Math.pow(other.r, 2);
+		var f = 2 * M / (m + M);
+		var dx = difference({ x: this.x, y: this.y }, { x: other.x, y: other.y });
+		var v = { x: this.vx, y: this.vy };
+		var u = { x: other.vx, y: other.vy };
+		var dv = difference(v, u);
+		var adjustment = scale(dx, f * dot(dv, dx) / dot(dx, dx))
+		var v_accent = difference(v, adjustment);
 
-		this.vx = v.x;
-		this.vy = v.y;
+		this.v = v_accent;
 	}
 
 	function distance(p, q){
@@ -146,6 +149,13 @@
 						ball.collideWith(target);
 					});
 			}.bind(this));
+			this.balls
+				.filter(function(ball){ return ball.v !== undefined; })
+				.forEach(function(ball){
+					ball.vx = ball.v.x;
+					ball.vy = ball.v.y;
+					delete ball.v;
+				});
 		}
 	};
 })(window);

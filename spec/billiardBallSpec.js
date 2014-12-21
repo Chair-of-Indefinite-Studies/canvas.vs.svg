@@ -51,13 +51,13 @@ describe('billiard.Ball', function(){
 	it('should collide with other ball', function(){
 		var precision = 0.0000001;
 		var ball = new billiard.Ball({ x: 0, y: 0, vx: 1, vy: 0 });
-		var other = new billiard.Ball({ x: 1, y: 1, vx: 0, vy: 0 });
+		var other = new billiard.Ball({ x: 2, y: 0, vx: 0, vy: 0 });
 
 		ball.collideWith(other);
 
 		var state = ball.state();
-		expect(state.vx).toBeCloseTo(0, precision);
-		expect(state.vy).toBeCloseTo(-1, precision);
+		expect(state.vx).toBeCloseTo(1, precision);
+		expect(state.vy).toBeCloseTo(0, precision);
 	});
 
 	describe('tick notification', function(){
