@@ -1,4 +1,7 @@
 (function(fps, billiard, table, undefined){
+	var canvas = document.getElementById('billiard-canvas');
+	new billiard.CanvasView(table, canvas);
+
 	var counter = new fps.FrameCounter();
 	function tick(){
 		counter.registerFrame();
