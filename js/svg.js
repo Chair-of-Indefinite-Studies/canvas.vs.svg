@@ -1,4 +1,7 @@
 (function(fps, billiard, table, undefined){
+	var svg = document.getElementById('billiard-svg');
+	new billiard.SVGView(table, svg);
+
 	var counter = new fps.FrameCounter();
 	function tick(){
 		counter.registerFrame();
